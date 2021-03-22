@@ -26,7 +26,7 @@ const Post = ({ item }) => {
 				/>
 			</ListItemAvatar>
 			<ListItemText
-				primary='Brunch this weekend?'
+				primary={}
 				secondary={
 					<React.Fragment>
 						<Typography

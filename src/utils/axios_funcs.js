@@ -8,7 +8,7 @@ const get_posts = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await instance.get('/posts');
-			resolve(response);
+			resolve(response.data);
 		} catch (err) {
 			reject(err);
 		}
@@ -19,7 +19,7 @@ const get_comments = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const response = await instance.get('/comments');
-			resolve(response);
+			resolve(response.data);
 		} catch (err) {
 			reject(err);
 		}
