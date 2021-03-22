@@ -31,7 +31,7 @@ const comments_reducer = (state = InitialState, action) => {
 			return {
 				...state,
 				loading: false,
-				comments: [...state.comments, ...action.payload],
+				comments: [...state.comments, action.payload],
 			};
 
 		case COMMENTS_OPERATION_FAILURE:

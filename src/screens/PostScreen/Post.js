@@ -8,8 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ThumbUpIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
+import Comment from './Comment';
+import { useDispatch, useSelector } from 'react-redux';
+import { add_to_comments } from '../../redux/actions/comment_actions';
 
 const useStyles = makeStyles((theme) => ({
 	item: {
@@ -21,14 +27,30 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Post = ({ post, likes, commentsnum }) => {
+const Post = ({ post, likes }) => {
 	const classes = useStyles();
+
+	const [commentinp, setCommentinp] = useState('');
 	const comments = useSelector((state) => {
-		return state.comments.comments.filter(
+		const items = state.comments.comments.filter(
 			(item) => item.postId === post.id
 		);
+		items.reverse();
+		return items;
 	});
-	const history = useHistory();
+	const dispatch = useDispatch();
+
+	const HandleComment = () => {
+		const commentitem = {
+			postId: post.id,
+			id: 501,
+			name: 'Sarat Angajala',
+			email: 'Eliseo@gardner.biz',
+			body: commentinp,
+		};
+		dispatch(add_to_comments(commentitem));
+		setCommentinp('');
+	};
 
 	return (
 		<ListItem id={post.id} className={classes.item} alignItems='flex-start'>
@@ -75,12 +97,41 @@ const Post = ({ post, likes, commentsnum }) => {
 							<ThumbUpIcon />
 						</IconButton>
 						{likes}
-						<IconButton
-							aria-label=''
-							onClick={() => history.push(`/post/${post.id}`)}>
+						<IconButton aria-label=''>
 							<ChatBubbleOutlineOutlinedIcon />{' '}
 						</IconButton>{' '}
 						{comments.length}
+						<br />
+						<React.Fragment>
+							<FormControl variant='outlined' fullWidth>
+								<InputLabel htmlFor='outlined-adornment-amount'>
+									Add Comment here...
+								</InputLabel>
+								<OutlinedInput
+									value={commentinp}
+									onChange={(e) =>
+										setCommentinp(e.target.value)
+									}
+									id='outlined-adornment-amount'
+									endAdornment={
+										<InputAdornment position='start'>
+											<Button
+												onClick={(e) =>
+													HandleComment(e)
+												}
+												variant='outlined'
+												color='primary'>
+												Add
+											</Button>
+										</InputAdornment>
+									}
+									labelWidth={60}
+								/>
+							</FormControl>
+							{comments.map((comment) => (
+								<Comment comment={comment} />
+							))}
+						</React.Fragment>
 					</React.Fragment>
 				}
 			/>

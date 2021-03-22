@@ -47,7 +47,6 @@ const get_all_posts = () => {
 
 const add_to_posts = (posts) => {
 	return async (dispatch) => {
-		dispatch(get_posts_initiate());
 		dispatch(add_posts(posts));
 	};
 };

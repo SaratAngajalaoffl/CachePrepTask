@@ -31,7 +31,7 @@ const post_reducer = (state = InitialState, action) => {
 			return {
 				...state,
 				loading: false,
-				posts: [...state.posts, ...action.payload],
+				posts: [...state.posts, action.payload],
 			};
 
 		case POSTS_OPERATION_FAILURE:

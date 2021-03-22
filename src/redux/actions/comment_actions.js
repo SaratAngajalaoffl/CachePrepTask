@@ -47,7 +47,6 @@ const get_all_comments = () => {
 
 const add_to_comments = (comments) => {
 	return async (dispatch) => {
-		dispatch(get_comments_initiate());
 		dispatch(add_comments(comments));
 	};
 };

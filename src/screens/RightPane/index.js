@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 function RightPane() {
 	const classes = useStyles();
+	const posts_state = useSelector((state) => state.posts);
 
 	return (
 		<Grid container className={classes.root} spacing={5}>
@@ -40,6 +42,11 @@ function RightPane() {
 					/>
 				</FormControl>
 			</Grid>
+			{posts_state.posts.slice(0, 10).map((item) => (
+				<Grid item xs={12}>
+					<a href={`#${item.id}`}>{`${item.body.slice(0, 55)}...`}</a>
+				</Grid>
+			))}
 		</Grid>
 	);
 }
